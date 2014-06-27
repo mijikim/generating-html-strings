@@ -1,22 +1,13 @@
 class HTMLGenerator
 
-  def initialize(string = "")
-    #   string = either "" or "<main>CONTENT</main>"
-    #   replace CONTENT with output of each method use sub
-    if string == "<main>CONTENT</main>"
-      string.sub("CONTENT", string.section
+  def initialize(layout = nil)
+    @layout = layout
     end
 
-    string
-
-
-  end
-
   def section(body)
-    "<section>#{body}</section>"
+    section_string = "<section>#{body}</section>"
+    wrap(section_string)
   end
-
-  def sub()
 
   def unordered_list(x)
     # "<ul><li>#{x[0]}</li><li>#{x[1]}</li><li>#{x[2]}</li></ul>"
@@ -24,33 +15,27 @@ class HTMLGenerator
     x.each do |list|
       string_value += "<li>#{list}</li>"
     end
-    string_value + "</ul>"
-
+    unordered_string = string_value + "</ul>"
+    wrap(unordered_string)
   end
 
   def button(x, y = "d")
     if y == "d"
-      "<button>#{x}</button>"
+      button_string = "<button>#{x}</button>"
+      wrap(button_string)
     else
-      "<button class='#{y[:class]}'>#{x}</button>"
-      end
+      button_string1 = "<button class='#{y[:class]}'>#{x}</button>"
+      wrap(button_string1)
+    end
   end
 
-  #   context "with a layout" do
-  #     it "returns wraps all html in the layout by replacing CONTENT" do
-  #       skip
-  #       html_generator = HTMLGenerator.new("<main>CONTENT</main>")
-  #       expect(html_generator.section("section text")).to eq("<main><section>section text</section></main>")
-  #
-  #       html_generator = HTMLGenerator.new("<div>CONTENT</div>")
-  #       expect(html_generator.unordered_list(["an item"])).to eq("<div><ul><li>an item</li></ul></div>")
-  #
-  #       html_generator = HTMLGenerator.new("<section>CONTENT</section>")
-  #       expect(html_generator.button("a button in a section")).to eq("<section><button>a button in a section</button></section>")
-  #     end
-  #   end
-  # end
+  def wrap(content)
+    if @layout != nil
+    @layout.gsub("CONTENT", content)
+    else
+      content
+    end
 
-
+  end
 
 end
